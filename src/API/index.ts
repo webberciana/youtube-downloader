@@ -27,7 +27,10 @@ export async function getVideoData(
       );
     }
   } else {
-    const data = await axios.get(`/api/${path}`, { params: { ...query } });
+    const data = await axios.get(`/api/${path}`, { 
+      params: { ...query },
+      signal 
+    });
     return data.data && data.data.data ? data.data.data : null;
   }
 }

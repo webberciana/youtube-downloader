@@ -34,12 +34,12 @@ export default function VideoResults() {
   };
   const dispatch = useDispatch();
   const paramQuery = useQuery({
-    queryKey: ["video", router.query.path || null, router.query.id || null],
+    queryKey: ["video", router.query.path, router.query.id],
     queryFn: ({ signal }) =>
       getVideoData(router.query.path as string, router.query, signal),
     cacheTime: 1 * 1000 * 60,
     staleTime: 1 * 1000 * 60,
-    // enabled: router.query.path,
+    enabled: !!router.query.path && !!router.query.id,
     retry: 0,
   });
 
