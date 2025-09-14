@@ -33,6 +33,7 @@ export default class AppUpdater extends EventEmitter {
   data: Data;
   update?: Release;
   public hasUpdate: boolean = false;
+  private activeDownloader?: EasyDl;
   constructor(data: Data) {
     super();
     this.data = data;
@@ -76,6 +77,7 @@ export default class AppUpdater extends EventEmitter {
         existBehavior: "ignore",
       }
     );
+    this.activeDownloader = downloader;
     downloader.on("metadata", (metadata) => {
       this.emit("metadata", metadata);
     });
@@ -95,6 +97,12 @@ export default class AppUpdater extends EventEmitter {
     });
 
     return asset;
+  }
+  public cancelDownload() {
+    if (this.activeDownloader) {
+      this.activeDownloader.cancel();
+      this.activeDownloader = undefined;
+    }
   }
   async quitAndInstall(setupPath: string) {
     if (!fs.existsSync(setupPath))

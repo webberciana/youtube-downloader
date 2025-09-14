@@ -28,7 +28,7 @@ export async function getVideoData(
     }
   } else {
     const data = await axios.get(`/api/${path}`, { params: { ...query } });
-    return data.data.data;
+    return data.data && data.data.data ? data.data.data : null;
   }
 }
 export async function predictInputStr(

@@ -60,4 +60,8 @@ app.on("window-all-closed", () => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+app.on("will-quit", () => {
+  autoUpdater.cancelDownload();
+});
 export default app;
